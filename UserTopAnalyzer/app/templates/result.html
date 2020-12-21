@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playlistify</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+            <a href="/about" class="logo">Made by Dev Masrani</a>
+            <nav id="nav">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+
+            </nav>
+            <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+    </header>
+
+    <section id="banner">
+        <div class="inner">
+
+            <a href="/" class="button">Go Home</a>
+            <br>
+            <br>
+            <h3>{{thing_one}}</h3>
+            <p>{{thing_two}}</p>
+            <p>{{thing_three}}</p>
+            <p>{{thing_four}}</p>
+            <p>{{thing_five}}</p>
+
+            <iframe src={{i_frame_url}} width=600 height=680 frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+    </section>
+
+
+
+</body>
+</html>

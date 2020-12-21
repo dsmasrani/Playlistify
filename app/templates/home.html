@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Custom Playlist Generator</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="/about" class="logo">Made by Sankalp Varshney</a>
+					<nav id="nav">
+						<a href="/home">Home</a>
+						<a href="generic.html">About</a>
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+			</header>
+
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<header>
+						<h1>Custom Spotify Playlist Generator!</h1>
+					</header>
+
+					<div class="flex ">
+
+						<div>
+							<!--<span class="icon fa-car"></span>-->
+							<h3>Genres</h3>
+							<p>Create a playlist full of songs</p>
+							<p>from multiple genres.</p>
+						</div>
+
+						<div>
+							<!--<span class="icon fa-camera"></span>-->
+							<h3>Artists</h3>
+							<p>A playlist with songs from</p>
+							<p>multiple artists.</p>
+						</div>
+
+						<div>
+							<!--<span class="icon fa-bug"></span>-->
+							<h3>Similar to a Song</h3>
+							<p>A playlist of songs similar to </p>
+							<p>a song provided by you.</p>
+						</div>
+
+					</div>
+
+					<footer>
+						<a href="#" class="button">Get Started Below!</a>
+					</footer>
+				</div>
+
+			</section>
+
+
+		<!-- Three -->
+			<section id="three" class="wrapper align-center">
+				<div class="inner">
+
+					<h3>Create a playlist with tracks from multiple genres:</h3>
+
+					<form action="/by_categories" method="post">
+
+						<div class="field half first">
+							<label for="name">Playlist Name</label>
+							<input name="playlist_name" id="name" type="text" placeholder="Playlist Name">
+						</div>
+						<div class="field half">
+							<label for="email">Playlist Description</label>
+							<input name="playlist_description" id="email" type="text" placeholder="Playlist Description">
+						</div>
+						<div class="field">
+							<label for="message">Genre Names (Separate w/ Commas)</label>
+							<textarea name="genre_names" id="message" rows="6" placeholder='Genre Names. Examples: Happy Holidays, Hip-Hop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&ampB (R&B), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Indie.'></textarea>
+						</div>
+						<ul class="actions">
+							<li><button class="button special" type="submit">Create!</button></li>
+						</ul>
+						<p>{{error_message_genres}}</p>
+					</form>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+
+					<h3>Create a playlist with songs from multiple artists:</h3>
+
+					<form action="/by_artists" method="post">
+
+						<div class="field half first">
+							<label for="name">Playlist Name</label>
+							<input name="playlist_name" id="name" type="text" placeholder="Playlist Name">
+						</div>
+						<div class="field half">
+							<label for="email">Playlist Description</label>
+							<input name="playlist_description" id="email" type="text" placeholder="Playlist Description">
+						</div>
+						<div class="field">
+							<label for="message">Artist Names (Separate w/ Commas)</label>
+							<textarea name="artists_names" id="message" rows="6" placeholder="Artist Names"></textarea>
+						</div>
+						<ul class="actions">
+							<li><button class="button alt" type="submit">Create!</button></li>
+						</ul>
+						<p>{{error_message_artists}}</p>
+					</form>
+
+				</div>
+			</footer>
+
+			<section id="three" class="wrapper align-center">
+				<div class="inner">
+
+					<h3>Create a playlist with tracks similar to a one song:</h3>
+
+					<form action="/by_one_track" method="post">
+
+						<div class="field half first">
+							<label for="name">Playlist Name</label>
+							<input name="playlist_name" id="name" type="text" placeholder="Playlist Name">
+						</div>
+						<div class="field half">
+							<label for="email">Playlist Description</label>
+							<input name="playlist_description" id="email" type="text" placeholder="Playlist Description">
+						</div>
+						<div class="field">
+							<label for="message">Song's Name</label>
+							<textarea name="one_track_name" id="message" rows="6" placeholder="Song's name"></textarea>
+						</div>
+						<ul class="actions">
+							<li><button class="button special" type="submit">Create! </button></li>
+						</ul>
+						<p>{{error_message_one_track}}</p>
+
+					</form>
+
+				</div>
+			</section>
+
+	</body>
+</html>
