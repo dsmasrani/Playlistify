@@ -1,3 +1,3 @@
-from app.Playlistify import app
+from UserTopAnalyzer.Playlistify import app
 if __name__ == "__main__":
   app.run()

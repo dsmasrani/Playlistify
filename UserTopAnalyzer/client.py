@@ -1,4 +1,3 @@
-from UserTopAnalyzer.Playlistify import *
 
 def main():
 #    print('What is the username of the user')
