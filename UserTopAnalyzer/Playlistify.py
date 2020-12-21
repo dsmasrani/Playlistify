@@ -120,15 +120,24 @@ def options():
     #return "finished"
 @app.route('/result',methods=['POST', 'GET'])
 def result():
-    generatePlaylist(request.form['playlist_name'],request.form['playlist_description'])
-    numsongs = int(request.form['number_of_songs'])
-    option = int(request.form['option'])
+    try:
+        generatePlaylist(request.form['playlist_name'],request.form['playlist_description'])
+    except:
+        return render_template('options.html', error_message_artists='Make sure to fill out all Boxes!')
+    try:
+        numsongs = int(request.form['number_of_songs'])
+    except:
+        return render_template('options.html', error_message_artists='Make sure to fill out all Boxes!')
+    try:
+        option = int(request.form['option'])
+    except:
+        return render_template('options.html', error_message_artists='Make sure to fill out all Boxes!')
     if(numsongs < 3):
         numsongs = 3
     if(numsongs > 100):
         numsongs = 100
     if(option == -1):
-        pass
+        return render_template('options.html', error_message_artists='Make sure to fill out all Boxes!')
     elif(option == 3):
         addSongs(getSongIDs(number=numsongs))
     else:
@@ -137,7 +146,7 @@ def result():
         for song in templist['items']:
             id = song['id']
             songIDs.append(id)
-            addSongs(songIDs)
+        addSongs(songIDs)
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(getPlaylistID())
     #return request.form['option']
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)
