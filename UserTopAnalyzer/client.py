@@ -1,9 +1,14 @@
 from UserTopAnalyzer.Playlistify import *
 
 def main():
-    print_topsongs()
-    generatePlaylist('Top Listened Songs70')
-    print(getPlaylistID())
+#    print('What is the username of the user')
+#    user = input()
+    print('how many songs would you like to see in your playlist(must be less than 100)')
+    number = int(input())//3
+    print('What would you like the Playlist to be called')
+    name = input(str)
+    generatePlaylist(name)
+    addSongs(getSongIDs(number))
 def print_topsongs():
     user_topArtists = getTopArtist(2,10)
     user_topSongs = getTopSongs(2,3)
