@@ -30,9 +30,9 @@ def getTopSongs(index, limit):
     topsongs = sp1.current_user_top_tracks(time_range=length[index], limit=limit)
     return topsongs
 
-def generatePlaylist(name):
+def generatePlaylist(name = 'Your Top Songs',description = 'Generated with love by Playlistify'):
     sp1 = spotipy.Spotify(auth_manager=create_spotify_oauth())
-    sp1.user_playlist_create(user=get_user_id(), name=name, description='Generated with love by Playlistify')
+    sp1.user_playlist_create(user=get_user_id(), name=name, description=description)
 
 def getPlaylistID():
     sp1 = spotipy.Spotify(auth_manager=create_spotify_oauth())
@@ -45,6 +45,7 @@ def getPlaylistID():
 
 def getSongIDs(number):
     songIDs = []
+    number = int(number//3)
     for i in range(3):
         templist = getTopSongs(i,number)
         for song in templist['items']:
@@ -89,6 +90,9 @@ app.config['SESSION_COOKIE_NAME'] = 'Dev Masrani'
 
 TOKEN_INFO = 'token_info'
 
+done_message='Done!'
+done_message_two='This playlist has been made in your Spotify Account!'
+
 @app.route('/')
 def main():
     return render_template('home.html')
@@ -114,5 +118,28 @@ def options():
     #addSongs(getSongIDs(10))
     return render_template('options.html')
     #return "finished"
+@app.route('/result',methods=['POST', 'GET'])
+def result():
+    generatePlaylist(request.form['playlist_name'],request.form['playlist_description'])
+    numsongs = int(request.form['number_of_songs'])
+    option = int(request.form['option'])
+    if(numsongs < 3):
+        numsongs = 3
+    if(numsongs > 100):
+        numsongs = 100
+    if(option == -1):
+        pass
+    elif(option == 3):
+        addSongs(getSongIDs(number=numsongs))
+    else:
+        songIDs = []
+        templist = getTopSongs(option, numsongs)
+        for song in templist['items']:
+            id = song['id']
+            songIDs.append(id)
+            addSongs(songIDs)
+    i_frame_url = "https://open.spotify.com/embed/playlist/" + str(getPlaylistID())
+    #return request.form['option']
+    return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)
 
 

@@ -31,7 +31,7 @@
 
 					<h3>Choose your options:</h3>
 
-					<form action="/by_categories" method="post">
+					<form action="/result" method="post">
 
 						<div class="field half first">
 							<label for="name">Playlist Name</label>
@@ -46,8 +46,14 @@
 							<input name="number_of_songs" id="numsongs" type="text" placeholder="Number of Songs(Must be less than 100)">
                         </div>
 						<div class="field half">
-							<label for="message">Genre Names (Separate w/ Commas)</label>
-                            
+							<label for="name">Playlist Popularity Duration</label>
+                            <select name="option" id="option">
+								<option value="-1">Pick Option:</option>
+  								<option value="0">Last Month</option>
+  								<option value="1">Last 6 Months</option>
+  								<option value="2">All Time</option>
+ 								 <option value="3">All of the Above</option>
+							</select>
 							<!--<textarea name="genre_names" id="message" rows="6" placeholder='Genre Names. Examples: Happy Holidays, Hip-Hop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&ampB (R&B), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Indie.'></textarea> -->
 						</div>
 						<ul class="actions">
