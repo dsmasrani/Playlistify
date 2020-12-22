@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Playlistify</title>
+		<title></title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
@@ -25,7 +25,7 @@
 			<section id="banner">
 				<div class="inner">
 					<header>
-						<h1>Playlistify</h1>
+						<h1>Top Track Analyzer!</h1>
 					</header>
 					<h4 style="color:white;">Hi! Welcome to Playlistify. I will analyze your account and give you a playlist based off your listening history! Please pick from the options below!
 					</h4>
@@ -34,15 +34,16 @@
 
 						<div>
 							<!--<span class="icon fa-car"></span>-->
-							<h3>Privacy Minded</h3>
-							<p>No Data is stored in the cloud</p>
+							<h3>Customization Oriented</h3>
+							<p>Users can modify playlist name and description!</p>
+							<p>Wide variety of options</p>
 						</div>
 
 						<div>
 							<!--<span class="icon fa-camera"></span>-->
-							<h3>Open Source</h3>
-							<p>Code entirely backed by </p>
-							<p>the Spotipy Project</p>
+							<h3>Privacy Oriented</h3>
+							<p>Users are immediately signed out </p>
+							<p>No data stored on server</p>
 						</div>
 
 						<div>
@@ -55,7 +56,7 @@
 					</div>
 
 					<footer>
-						<a href="#" class="button">Get Started Below!</a>
+						<a href="#three" class="button">Get Started Below!</a>
 					</footer>
 				</div>
 
@@ -90,7 +91,7 @@
   								<option value="2">All Time</option>
  								 <option value="3">All of the Above</option>
 							</select>
-							<!--<textarea name="genre_names" id="message" rows="6" placeholder='Genre Names. Examples: Happy Holidays, Hip-Hop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&ampB (R&B), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Indie.'></textarea> -->
+							<!--<textarea name="genre_names" id="message" rows="6" placeholder='Genre Names. Examples: Happy Holidays, Hip-Hop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&B (R&B), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Indie.'></textarea> -->
 						</div>
 						<p>{{error_message_artists}}</p>
 						<ul class="actions">
