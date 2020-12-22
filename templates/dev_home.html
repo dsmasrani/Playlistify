@@ -12,10 +12,10 @@
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="/about" class="logo">Made by Dev Masrani</a>
+					<a href="http://www.masrani.tech/" class="logo">Made by Dev Masrani</a>
 					<nav id="nav">
-						<a href="/homepage">Home</a>
-						<a href="generic.html">About</a>
+						<a href="/#">Home</a>
+						<a href="about.html">About</a>
 					</nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
@@ -27,8 +27,7 @@
 					<header>
 						<h1>Playlistify</h1>
 					</header>
-					<h4 style="color:white;">Hi! Welcome to Playlistify. I will need access to your account to analyze your listening behavior and generate a playlist full of your past favorite songs!
-						Please login below to access my features!
+					<h4 style="color:white;">Hi! Welcome to Playlistify. I will analyze your account and give you a playlist based off your listening history! Please pick from the options below!
 					</h4>
 					<p></p>
 					<div class="flex ">
@@ -56,7 +55,7 @@
 					</div>
 
 					<footer>
-						<a href="/login" class="button">Login Here!</a>
+						<a href="#" class="button">Get Started Below!</a>
 					</footer>
 				</div>
 
@@ -67,11 +66,53 @@
 			<section id="three" class="wrapper align-center">
 				<div class="inner">
 
-					<h7>Built with love on 12/20/2020 | Last Updated: 12/31/2020 </h7>
+					<h3>Choose your options:</h3>
+					<form action="/result" method="post">
+
+						<div class="field half first">
+							<label for="name">Playlist Name</label>
+							<input name="playlist_name" id="name" type="text" placeholder="Playlist Name">
+						</div>
+						<div class="field half">
+							<label for="email">Playlist Description</label>
+							<input name="playlist_description" id="email" type="text" placeholder="Playlist Description">
+						</div>
+                        <div class="field half first">
+                            <label for="name">Number of songs in playlist</label>
+							<input name="number_of_songs" id="numsongs" type="text" placeholder="Number of Songs(May not be same number requested)">
+                        </div>
+						<div class="field half">
+							<label for="name">Playlist Popularity Duration</label>
+                            <select name="option" id="option">
+								<option value="-1">Pick Option:</option>
+  								<option value="0">Last Month</option>
+  								<option value="1">Last 6 Months</option>
+  								<option value="2">All Time</option>
+ 								 <option value="3">All of the Above</option>
+							</select>
+							<!--<textarea name="genre_names" id="message" rows="6" placeholder='Genre Names. Examples: Happy Holidays, Hip-Hop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&ampB (R&B), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Indie.'></textarea> -->
+						</div>
+						<p>{{error_message_artists}}</p>
+						<ul class="actions">
+
+							<li>
+								<button class="button special" type="submit">Create!</button></li>
+						</ul>
+						<p>{{error_message_genres}}</p>
+					</form>
+				</div>
+			</section>
+
+<!--			<section id="three" class="wrapper align-center"> -->
+		<footer id="footer">
+				<div class="inner">
+
+					<h7>Built with love on 12/18/2020 | Last Updated: 12/23/2020 </h7>
 				</div>
 				<div class="inner">
 					<h7>Copyright &copy; <script>document.write(new Date().getFullYear())</script> Dev Masrani All Rights Reserved</h7>
 				</div>
-			</section>
+		</footer>
+<!--			</section> -->
 	</body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Projection by TEMPLATED</title>
+		<title>Playlistify</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
@@ -12,13 +12,13 @@
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="index.html" class="logo">Made by SAN & DEV</a>
+					<a href="" class="logo">Made by San Varshney and Dev Masrani</a>
 					<nav id="nav">
-						<a href="homepage.html">Home</a>
+						<!--<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a> -->
+						<a href="/#">Home</a>
 						<a href="about.html">About</a>
 						<!--<a href="elements.html">Elements</a>-->
 					</nav>
-					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
 			</header>
 
@@ -34,24 +34,25 @@
                         <div>
 							<span class="icon fa-user-secret"></span>
 							<h3>Secure</h3>
-							<p>No Data is stored in the cloud</p>
+							<p>Utilizing 256 bit encryption</p>
+							<p>Privacy Oriented</p>
 						</div>
 
 						<div>
 							<span class="icon fa-code"></span>
 							<h3>Open Source</h3>
-							<p>Coded entirely by </p>
-							<p>San and Dev</p>
+							<p>Utilizing the Spotipy API</p>
+							<p>(Spotify Python API)</p>
 						</div>
 
 						<div>
 							<span class="icon fa-tachometer"></span>
-							<h3>Brisk</h3>
-							<p>Fast Computation</p>
-							<p>Speed</p>
+							<h3>Lightweight</h3>
+							<p>Built on credited platform</p>
+							<p> Flask, Python3, HTML/CSS </p>
 						</div>
 
-						<p><br><br>This app creates custom playlists <strong>directly</strong>to your spotify account!</p>
+						<p><br><br>This app creates custom playlists <strong>directly </strong>to your spotify account!</p>
 
 					</div>
 
@@ -77,7 +78,7 @@
 								you can create custom playlists include, a playlist with <strong>multiple artists</strong>,<br />a playlist with <strong>multiple categories</strong>,
 								a playlist with tracks similar to <strong>reference song.</strong></p>
 							<footer>
-								<form action="/san_login">
+								<form action="/login_san">
 									<ul class="actions">
 										<li><button class="button special" type="submit">Get Started</button></li>
 									</ul>
@@ -93,7 +94,7 @@
 							</header>
 							<p>Create a custom playlist with your <strong>top tracks</strong> from a range of times!<br><br></p>
 							<footer>
-								<form action="/dev_login">
+								<form action="/login_dev">
 									<ul class="actions">
 										<li><button class="button special" type="submit">Get Started</button></li>
 									</ul>
