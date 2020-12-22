@@ -1,6 +1,7 @@
 from flask import Flask, request, url_for, session, redirect, render_template
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
-from UserTopAnalyzer import Playlistify
+import Playlistify
+
 app = Flask(__name__)
 app.secret_key = 'as8907nj'
 app.config['SESSION_COOKIE_NAME'] = 'Dev Masrani'
@@ -28,7 +29,7 @@ def redirectPage():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('dev_home.html')
 
 
 def create_spotify_oauth():  # import client Id and client secret from the secrets file

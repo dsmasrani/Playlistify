@@ -43,7 +43,7 @@ def generatePlaylist(name = 'Your Top Songs',description = 'Generated with love 
 def getPlaylistID():
     token_info = get_token()
     sp1 = spotipy.Spotify(auth=token_info['access_token'])
-    user_playlist = sp1.user_playlists(user=get_user_id(),limit=1,offset=0)
+    user_playlist = sp1.user_playlists(user=get_user_id() , limit=1 , offset=0)
 #    for item in user_playlist:
 #        print(item)
     playlist_Data = user_playlist['items'][0]
@@ -70,7 +70,7 @@ def create_spotify_oauth():  # import client Id and client secret from the secre
     return SpotifyOAuth(
         client_id=client_id,
         client_secret=client_secret,
-        redirect_uri=url_for('redirectPage', _external=True),  # url_for is good to make the url short
+        redirect_uri=url_for('dev_redirectPage', _external=True),  # url_for is good to make the url short
         #redirect_uri=redirect_uri,
         # external=True will create an absolute path
         scope=scope  # change scope to user-library-read if it doesn't work
@@ -81,7 +81,7 @@ def create_spotify_oauth2():  # import client Id and client secret from the secr
         username=get_user_id(),
         client_id=client_id,
         client_secret=client_secret,
-        redirect_uri=url_for('redirectPage', _external=True),  # url_for is good to make the url short
+        redirect_uri=url_for('dev_redirectPage', _external=True),  # url_for is good to make the url short
         #redirect_uri=redirect_uri,
         # external=True will create an absolute path
         scope=scope  # change scope to user-library-read if it doesn't work
@@ -110,34 +110,7 @@ TOKEN_INFO = 'a47a9l'
 done_message='Done!'
 done_message_two='This playlist has been made in your Spotify Account!'
 
-@app.route('/')
-def main():
-#    try:
-#        os.remove('.cache')
-#    except:
-#        pass
-    return render_template('home.html')
-@app.route('/login')
-def login():
-    sp_oauth = create_spotify_oauth()
-    auth_url = sp_oauth.get_authorize_url()
-    session.pop('TOKEN_INFO',None)
-    return redirect(auth_url)
-@app.route('/redirect')
-def redirectPage():
-    sp_oauth = create_spotify_oauth()
-    code = request.args.get('code')
-    token_info = sp_oauth.get_access_token(code)
-    session['TOKEN_INFO'] = token_info
-    return redirect(url_for('options', _external=True))
 
-@app.route('/options')
-def options():
-    #generatePlaylist('test1')
-    #return getTopSongs(0,20)
-    #addSongs(getSongIDs(10))
-    return render_template('options.html')
-    #return "finished"
 @app.route('/result',methods=['POST', 'GET'])
 def result():
     try:

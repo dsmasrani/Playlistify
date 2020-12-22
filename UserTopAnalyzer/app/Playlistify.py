@@ -103,7 +103,7 @@ def main():
         os.remove('.cache')
     except:
         pass
-    return render_template('home.html')
+    return render_template('dev_home.html')
 @app.route('/login')
 def login():
     sp_oauth = create_spotify_oauth()

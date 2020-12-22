@@ -13,30 +13,8 @@ app.config['SESSION_COOKIE_NAME'] = 'Sans Cookie'
 
 TOKEN_INFO = "token_info"
 
-done_message='Done!'
-done_message_two='This playlist has been made in your Spotify Account!'
-
-
-@app.route('/')
-def login():
-    sp_oauth = create_spotify_oauth()
-    auth_url = sp_oauth.get_authorize_url()
-    return redirect(auth_url)
-
-
-@app.route('/redirect')
-def redirectPage():
-    sp_oauth = create_spotify_oauth()
-    session.clear()
-    code = request.args.get('code')
-    token_info = sp_oauth.get_access_token(code)
-    session[TOKEN_INFO] = token_info
-    return redirect(url_for('home', _external=True))
-
-
-@app.route('/home')
-def home():
-    return render_template('home.html')
+done_message = 'Done!'
+done_message_two = 'This playlist has been made in your Spotify Account!'
 
 
 @app.route('/by_categories', methods=['POST', 'GET'])
@@ -82,7 +60,7 @@ def by_categories():
         populate_playlist(cut_songs_from_playlists, playlist_id)
 
     except:
-        return render_template('home.html', error_message_genres='Error! Make sure to enter the name of the '
+        return render_template('dev_home.html', error_message_genres='Error! Make sure to enter the name of the '
                                                                  'genres right and separate with commas!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
@@ -116,7 +94,7 @@ def by_artists():
         playlist_id = create_user_playlist(playlist_name, playlist_description, user_id)
         populate_playlist(artist_songs_uris, playlist_id)
     except:
-        return render_template('home.html', error_message_artists='Make sure to enter the name of the artist right'
+        return render_template('dev_home.html', error_message_artists='Make sure to enter the name of the artist right'
                                                                   'and separate them with a comma!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
@@ -158,7 +136,7 @@ def by_one_track():
         playlist_id = create_user_playlist(playlist_name, playlist_description, user_id)
         populate_playlist(half_artists_songs, playlist_id)
     except:
-        return render_template('home.html', error_message_one_track="Cant seem to find the track! Check spelling!")
+        return render_template('dev_home.html', error_message_one_track="Cant seem to find the track! Check spelling!")
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)

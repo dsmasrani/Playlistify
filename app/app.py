@@ -37,7 +37,7 @@ def redirectPage():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('dev_home.html')
 
 
 @app.route('/by_categories', methods=['POST', 'GET'])
@@ -83,7 +83,7 @@ def by_categories():
         populate_playlist(cut_songs_from_playlists, playlist_id)
 
     except:
-        return render_template('home.html', error_message_genres='Error! Make sure to enter the name of the '
+        return render_template('dev_home.html', error_message_genres='Error! Make sure to enter the name of the '
                                                                  'genres right and separate with commas!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
@@ -117,7 +117,7 @@ def by_artists():
         playlist_id = create_user_playlist(playlist_name, playlist_description, user_id)
         populate_playlist(artist_songs_uris, playlist_id)
     except:
-        return render_template('home.html', error_message_artists='Make sure to enter the name of the artist right'
+        return render_template('dev_home.html', error_message_artists='Make sure to enter the name of the artist right'
                                                                   'and separate them with a comma!')
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
     try:
@@ -162,7 +162,7 @@ def by_one_track():
         playlist_id = create_user_playlist(playlist_name, playlist_description, user_id)
         populate_playlist(half_artists_songs, playlist_id)
     except:
-        return render_template('home.html', error_message_one_track="Cant seem to find the track! Check spelling!")
+        return render_template('dev_home.html', error_message_one_track="Cant seem to find the track! Check spelling!")
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)
