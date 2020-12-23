@@ -2212,6 +2212,7 @@
 
 		.image img {
 			border-radius: 0;
+			padding-right:300px;
 			display: block;
 		}
 
