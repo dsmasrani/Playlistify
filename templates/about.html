@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Playlistify</title>
+		<title>Playlistifyer</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
@@ -11,81 +11,50 @@
 
 		<!-- Header -->
 			<header id="header">
-				    <div class="card middle">
-      <div class="front">
-        <img src="san_pic-min.jpg" alt="">
-      </div>
-      <div class="back">
-        <div class="back-content middle">
-          <h2>San Varshney</h2>
-          <span>Freshman @ Calpoly</span>
-          <p>he has a big penis</p>
-          <p>
-          <div class="sm">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-                    <div class="card middle">
-      <div class="front">
-        <img src="san_pic-min.jpg" alt="">
-      </div>
-      <div class="back">
-        <div class="back-content middle">
-          <h2>San Varshney</h2>
-          <span>Freshman @ Calpoly</span>
-          <p>he has a big penis</p>
-          <p>
-          <div class="sm">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
+				<div class="inner">
+					<a href="" class="logo">Made by San Varshney and Dev Masrani</a>
+					<nav id="nav">
+						<!--<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a> -->
+						<a href="/#">Home</a>
+						<a href="/about">About</a>
+						<!--<a href="elements.html">Elements</a>-->
+					</nav>
+				</div>
 			</header>
 
-		<!-- Banner -->
-			<section id="banner">
+		<section id="banner">
 				<div class="inner">
 					<header>
-						<h1>Playlistify</h1>
+						<h1>About Us</h1>
 					</header>
 
 					<div class="flex ">
 
                         <div>
-							<span class="icon fa-user-secret"></span>
-							<h3>Secure</h3>
-							<p>Utilizing 256 bit encryption</p>
-							<p>Privacy Oriented</p>
+							<img src="static/images/san_pic-min.jpg" alt="Pic 01" width=300" height="310" style="object-fit: cover;border-radius: 50%;">
+							<h3>Sankalp Varshney</h3>
+							<p>Class of 2024 @ Calpoly SLO</p>
+							<p>Pursuing Computer Science</p>
+            				<a href="https://www.linkedin.com/in/sanv12" style="text-decoration: none"><i class="icon fa-linkedin-square"></i>&nbsp&nbsp&nbsp&nbsp</a>
+            				<a href="https://www.snapchat.com/add/santheman2" style="text-decoration: none"><i class="icon fa-snapchat"></i>&nbsp&nbsp&nbsp&nbsp</a>
+							<a href="https://www.instagram.com/sanvarshney_/" style="text-decoration: none"><i class="icon fa-instagram"></i>&nbsp&nbsp&nbsp&nbsp</a>
+							<a href="https://github.com/dsmasrani/Playlistify" style="text-decoration: none"><i class="icon fa-github"></i></a>
 						</div>
 
 						<div>
-							<span class="icon fa-code"></span>
-							<h3>Open Source</h3>
-							<p>Utilizing the Spotipy API</p>
-							<p>(Spotify Python API)</p>
+							<img src="static/images/dev_pic.jpg" alt="Pic 01" width="300" height="310" style="object-fit: cover;border-radius: 50%"/>
+								<h3>Dev Masrani</h3>
+							<p>Class of 2024 @ Calpoly SLO</p>
+							<p>Pursuing Computer Engineering</p>
+							<a href="https://www.linkedin.com/in/dev-masrani" style="text-decoration: none"><i class="icon fa-linkedin-square"></i>&nbsp&nbsp&nbsp&nbsp</a>
+            				<a href="https://www.snapchat.com/add/dev.masrani" style="text-decoration: none"><i class="icon fa-snapchat"></i>&nbsp&nbsp&nbsp&nbsp</a>
+							<a href="https://www.instagram.com/dev.masrani/" style="text-decoration: none"><i class="icon fa-instagram"></i>&nbsp&nbsp&nbsp&nbsp</a>
+							<a href="https://github.com/dsmasrani/Playlistify" style="text-decoration: none"><i class="icon fa-github"></i></a>
 						</div>
 
-						<div>
-							<span class="icon fa-tachometer"></span>
-							<h3>Lightweight</h3>
-							<p>Built on credited platform</p>
-							<p> Flask, Python3, HTML/CSS </p>
-						</div>
+
 					</div>
-						<p><br><br>This app creates custom playlists <strong>directly </strong>to your spotify account!<br><br></p>
-					<footer>
-						<a href="#" class="button">Scroll to get Started!</a>
-					</footer>
+
 			</section>
 
 
@@ -93,40 +62,7 @@
 			<section id="three" class="wrapper align-center">
 				<div class="inner">
 					<div class="flex flex-2">
-						<article>
-							<div>
-
-							</div>
-							<header>
-								<h3>Create Custom Playlists</h3>
-							</header>
-							<p>The three ways
-								you can create custom playlists include, a playlist with <strong>multiple artists</strong>,<br />a playlist with <strong>multiple categories</strong>,
-								a playlist with tracks similar to <strong>reference song.</strong></p>
-							<footer>
-								<form action="/login_san">
-									<ul class="actions">
-										<li><button class="button special" type="submit">Get Started</button></li>
-									</ul>
-								</form>
-							</footer>
-						</article>
-						<article>
-							<div>
-
-							</div>
-							<header>
-								<h3>Create Top Tracks Playlist</h3>
-							</header>
-							<p>Create a custom playlist with your <strong>top tracks</strong> from a range of times!<br><br></p>
-							<footer>
-								<form action="/login_dev">
-									<ul class="actions">
-										<li><button class="button special" type="submit">Get Started</button></li>
-									</ul>
-								</form>
-							</footer>
-						</article>
+						<p>in conclusion, san has a bigger penis than dev</p>
 					</div>
 				</div>
 			</section>
