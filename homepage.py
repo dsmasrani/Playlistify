@@ -60,6 +60,8 @@ app.secret_key = 'development key'
 mail.init_app(app)
 global auth_redirect
 auth_redirect = False
+global contact_redirect
+contact_redirect = False
 os.environ['SPOTIPY_CLIENT_ID'] = 'f3b6b69d44b9416ca63b4788eac70bc5'
 os.environ['SPOTIPY_CLIENT_SECRET'] = 'b360ac0c84f04209b0ce388f2519db20'
 os.environ['SPOTIPY_REDIRECT_URI'] = 'http://127.0.0.1:5000/login'
@@ -73,13 +75,16 @@ def session_cache_path():
 
 @app.route('/about')
 def about():
+    global contact_redirect
+    contact_redirect = False
     return render_template('about.html')
 @app.route('/')
 def homepage():
     global auth_redirect
     auth_redirect = False
+    global contact_redirect
+    contact_redirect = True
     return render_template('homepage.html')
-    #return 'hi'
 
 @app.route('/redirect')
 def redirectPage():
@@ -213,7 +218,11 @@ def contact():
     body = 'CONTACT NAME: ' + str(contact_name) + '\n\n' + 'CONTACT EMAIL: ' + str(contact_email) + '\n' + '\n' + 'MESSAGE BODY: ' + str(contact_message)
     msg.body = body
     mail.send(msg)
-    return render_template('/homepage.html/', success_message="Email was sent! We will get back to you shortly!")
+    if (contact_redirect == True):
+        return render_template('/homepage.html/', success_message="Email was sent! We will get back to you shortly!")
+
+    else:
+        return render_template('/about.html/', success_message="Email was sent! We will get back to you shortly!")
 
 def generatePlaylist(name,description):
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
