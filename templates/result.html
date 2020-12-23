@@ -3,9 +3,30 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Custom Spotify Playlist Maker</title>
+    <link rel='icon' href="{{ url_for('static',filename='favicon.ico') }}" type='image/x-icon'/ >
+    <title>Playlistifyer | Results</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+
+}
+
+/* Then style the iframe to fit in the container div with full height and width */
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+    </style>
+
 </head>
 <body>
 
@@ -14,9 +35,9 @@
         <div class="inner">
             <a href="" class="logo">Made by Sankalp Varshney and Dev Masrani</a>
             <nav id="nav">
-                <a href="/#">Home</a>
+                <a href="/">Home</a>
                 <a href="about.html">About</a>
-
+                <a href="https://github.com/dsmasrani/Playlistify">Github</a>
             </nav>
             <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
         </div>
@@ -33,8 +54,9 @@
             <p>{{thing_three}}</p>
             <p>{{thing_four}}</p>
             <p>{{thing_five}}</p>
-
-            <iframe src={{i_frame_url}} width=600 height=680 frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="container">
+                <iframe src={{i_frame_url}} width=600 height=680 frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
         </div>
     </section>
 		<footer id="footer">
@@ -46,6 +68,11 @@
 					<h7>Copyright &copy; <script>document.write(new Date().getFullYear())</script> Dev and San All Rights Reserved</h7>
 				</div>
 		</footer>
+    <!-- Scripts -->
+        <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/skel.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/util.js')}}"></script>
+        <script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 </body>
 </html>

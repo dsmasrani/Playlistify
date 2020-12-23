@@ -2,9 +2,11 @@
 
 <html>
 	<head>
-		<title></title>
+		<title>Playlistifyer | Top Track Analyzer</title>
 		<meta charset="utf-8" />
+		<link rel='icon' href="{{ url_for('static',filename='favicon.ico') }}" type='image/x-icon'/ >
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
 	</head>
 	<body>
@@ -14,7 +16,7 @@
 				<div class="inner">
 					<a href="http://www.masrani.tech/" class="logo">Made by Dev Masrani</a>
 					<nav id="nav">
-						<a href="/#">Home</a>
+						<a href="/">Home</a>
 						<a href="/about">About</a>
 						<a href="https://github.com/dsmasrani/Playlistify">Github</a>
 					</nav>
@@ -36,8 +38,8 @@
 						<div>
 							<!--<span class="icon fa-car"></span>-->
 							<h3>Customization Oriented</h3>
-							<p>Users can modify playlist name and description!</p>
-							<p>Wide variety of options</p>
+							<p>Users can choose their time period</p>
+							<p>or pick All of the above</p>
 						</div>
 
 						<div>
@@ -116,5 +118,11 @@
 				</div>
 		</footer>
 <!--			</section> -->
+		<!-- Scripts -->
+		<script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+		<script src="{{url_for('static', filename='js/skel.min.js')}}"></script>
+		<script src="{{url_for('static', filename='js/util.js')}}"></script>
+		<script src="{{url_for('static', filename='js/main.js')}}"></script>
+
 	</body>
 </html>

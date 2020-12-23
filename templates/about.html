@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Playlistifyer</title>
+		<title>Playlistifyer | About Us</title>
+		<link rel='icon' href="{{ url_for('static',filename='favicon.ico') }}" type='image/x-icon'/ >
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
@@ -12,14 +13,15 @@
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="" class="logo">Made by San Varshney and Dev Masrani</a>
+					<a href="/" class="logo">Made by San Varshney and Dev Masrani</a>
 					<nav id="nav">
 						<!--<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a> -->
-						<a href="/#">Home</a>
+						<a href="/">Home</a>
 						<a href="/about">About</a>
 						<a href="https://github.com/dsmasrani/Playlistify">Github</a>
 						<!--<a href="elements.html">Elements</a>-->
 					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
 			</header>
 
@@ -38,7 +40,7 @@
 							<p>Pursuing Computer Science</p>
             				<a href="https://www.linkedin.com/in/sanv12" style="text-decoration: none"><i class="icon fa-linkedin-square"></i>&nbsp&nbsp&nbsp&nbsp</a>
             				<a href="https://www.snapchat.com/add/santheman2" style="text-decoration: none"><i class="icon fa-snapchat"></i>&nbsp&nbsp&nbsp&nbsp</a>
-							<a href="https://www.instagram.com/sanvarshney_/" style="text-decoration: none"><i class="icon fa-instagram"></i>&nbsp&nbsp&nbsp&nbsp</a>
+							<a href="https://www.instagram.com/san_varshney/" style="text-decoration: none"><i class="icon fa-instagram"></i>&nbsp&nbsp&nbsp&nbsp</a>
 							<a href="https://github.com/dsmasrani/Playlistify" style="text-decoration: none"><i class="icon fa-github"></i></a>
 						</div>
 
@@ -63,7 +65,12 @@
 			<section id="three" class="wrapper align-center">
 				<div class="inner">
 					<div class="flex flex-2">
-						<p>in conclusion, san has a bigger penis than dev</p>
+						<p align="left">Hi! Welcome to Playlistifyer.<br></p>
+						<p align="left">This app was made by 2 roommates attending Cal Poly SLO. We are both pursuing degrees in the CS field and wanted to make something that not only utilized our knowledge in Python but implemented one of our favorite interests: Music!
+						Using Flask along with many small libraries along the way, we were able to successfully deploy Playlistifyer. It was very much a learning experience, so if you have any feedback, feel free to  contact us using the form below or the various platforms linked above.
+						We hope you love Playlistifyer just as much as we do!<br><br></p>
+
+						<p align="left">Truly,<br> The Playlistifyer Developers.</p>
 					</div>
 				</div>
 			</section>
@@ -99,6 +106,11 @@
 
 				</div>
 			</footer>
+		<!-- Scripts -->
+			<script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+			<script src="{{url_for('static', filename='js/skel.min.js')}}"></script>
+			<script src="{{url_for('static', filename='js/util.js')}}"></script>
+			<script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 	</body>
 </html>

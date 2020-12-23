@@ -2,9 +2,11 @@
 
 <html>
 	<head>
-		<title>Custom Playlist Generator</title>
+		<title>Playlistifyer | Custom Playlist Generator</title>
 		<meta charset="utf-8" />
+		<link rel='icon' href="{{ url_for('static',filename='favicon.ico') }}" type='image/x-icon'/ >
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
 	</head>
 	<body>
@@ -80,7 +82,7 @@
 						</div>
 						<div class="field">
 							<label for="message">Genre Names (Separate w/ Commas)</label>
-							<textarea name="genre_names" id="message" rows="6" placeholder='Genre Names. Examples: HipHop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&B (R&B), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Indie.'></textarea>
+							<textarea name="genre_names" id="message" rows="6" placeholder='Genre Name Examples: Hip-Hop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&B (RnB), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Desi, EDM, K-Pop, Indie'></textarea>
 						</div>
 						<ul class="actions">
 							<li><button class="button special" type="submit">Create!</button></li>
@@ -156,6 +158,11 @@
 					<h7>Copyright &copy; <script>document.write(new Date().getFullYear())</script> Sankalp Varshney All Rights Reserved</h7>
 				</div>
 		</footer>
+		<!-- Scripts -->
+		<script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+		<script src="{{url_for('static', filename='js/skel.min.js')}}"></script>
+		<script src="{{url_for('static', filename='js/util.js')}}"></script>
+		<script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 	</body>
 </html>

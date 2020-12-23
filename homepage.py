@@ -50,8 +50,8 @@ app = Flask(__name__)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_SSL"] = True
-app.config["MAIL_USERNAME"] = 'playlistifyer@gmail.com'
-app.config["MAIL_PASSWORD"] = 'xn$5YMr7%d72'
+app.config["MAIL_USERNAME"] = ''
+app.config["MAIL_PASSWORD"] = ''
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './.flask_session/'
@@ -62,9 +62,10 @@ global auth_redirect
 auth_redirect = False
 global contact_redirect
 contact_redirect = False
-os.environ['SPOTIPY_CLIENT_ID'] = 'f3b6b69d44b9416ca63b4788eac70bc5'
-os.environ['SPOTIPY_CLIENT_SECRET'] = 'b360ac0c84f04209b0ce388f2519db20'
-os.environ['SPOTIPY_REDIRECT_URI'] = 'http://127.0.0.1:5000/login'
+os.environ['SPOTIPY_CLIENT_ID'] = ''
+os.environ['SPOTIPY_CLIENT_SECRET'] = ''
+#os.environ['SPOTIPY_REDIRECT_URI'] = 'http://127.0.0.1:5000/login'
+os.environ['SPOTIPY_REDIRECT_URI'] = 'http://playlistifyer.herokuapp.com/login'
 
 caches_folder = './.spotify_caches/' #Cache path for clearing session
 if not os.path.exists(caches_folder):
@@ -106,6 +107,7 @@ def loginsan():
     return redirect('/login')
 @app.route('/login')
 def login():
+    session.clear()
     if not session.get('uuid'):
         # Step 1. Visitor is unknown, give random ID
         session['uuid'] = str(uuid.uuid4())
@@ -133,7 +135,10 @@ def login():
 
 @app.route('/san_home')
 def home():
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    try:
+        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    except:
+        return redirect('/')
     if not auth_manager.get_cached_token():
         return redirect('/')
     return render_template('san_home.html')
@@ -142,7 +147,10 @@ def home():
 
 @app.route('/dev_home')
 def main():
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    try:
+        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    except:
+        return redirect('/')
     sp1 = spotipy.Spotify(auth_manager=auth_manager)
     if not auth_manager.get_cached_token():
         return redirect('/')
@@ -156,17 +164,13 @@ def dev_redirectPage():
     session['TOKEN_INFO'] = token_info
     return redirect(url_for('options', _external=True))
 
-@app.route('/options')
-def options():
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path()) #gets token for OAuth
-    if not auth_manager.get_cached_token():
-        return redirect('/') #if no token, redirect back home
-    return render_template('options.html')
-
 @app.route('/result',methods=['POST', 'GET'])
 def result():
     fail = 0 #counts number of fails to prevent empty playist creation when user hastily preses go
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    try:
+        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    except:
+        return redirect('/')
     if not auth_manager.get_cached_token():
         return redirect('/') #if no login token, redirect back to root
     try:
@@ -201,10 +205,10 @@ def result():
         addSongs(getSongIDs(number=numsongs))
     else:
         getTopSongsinPeriod(option,numsongs) #gets top songs and gives IDs for them and adds them
-    print(playlist_name) #telemetry to see what people are making
-    print(playlist_description)
-    print(numsongs)
-    print(option)
+    #(playlist_name) #telemetry to see what people are making
+    #print(playlist_description)
+    #print(numsongs)
+    #print(option)
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(getPlaylistID())
     session.clear()
     #return request.form['option']
@@ -274,8 +278,15 @@ def getTopSongsinPeriod(option,numsongs):
         songIDs.append(id)
     addSongs(songIDs)
 
+
 @app.route('/by_categories', methods=['POST', 'GET'])
 def by_categories():
+    try:
+        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    except:
+        return redirect('/')
+    if not auth_manager.get_cached_token():
+        return redirect('/') #if no login token, redirect back to root
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     sp = spotipy.Spotify(auth_manager=auth_manager)
 
@@ -285,6 +296,30 @@ def by_categories():
     # separate by commas
     category_names = request.form['genre_names']
     category_names = [x.strip() for x in category_names.split(',')]
+
+    for i in range(len(category_names)):
+        if (category_names[i].lower() == 'hip-hop'):
+            category_names[i] = 'hiphop'
+        if (category_names[i].lower() == 'at-home'):
+            category_names[i] = 'at_home'
+        if (category_names[i].lower() == 'at home'):
+            category_names[i] = 'at_home'
+        if (category_names[i].lower() == 'indie'):
+            category_names[i] = 'indie_alt'
+        if (category_names[i].lower() == 'edm'):
+            category_names[i] = 'edm_dance'
+        if (category_names[i].lower() == 'r&b'):
+            category_names[i] = 'rnb'
+        if (category_names[i].lower() == 'k-pop'):
+            category_names[i] = 'kpop'
+        if (category_names[i].lower() == 'christian'):
+            category_names[i] = 'inspirational'
+        if (category_names[i].lower() == 'in the car'):
+            category_names[i] = 'in_the_car'
+        if (category_names[i].lower() == 'folks & acoustic'):
+            category_names[i] = 'roots'
+        if (category_names[i].lower() == 'cooking & dining'):
+            category_names[i] = 'dinner'
 
     # get user id to create playlist
     user_id = get_user_id()
@@ -299,10 +334,14 @@ def by_categories():
 
         # shuffle the list to random
         random.shuffle(category_playlist_ids)
+        # category_playlist_ids.remove('3SMjN7PQ25QcVn8XaiPvST')
 
         all_songs_from_playlists = []
         for x in range(int(len(category_playlist_ids))):
-            all_songs_from_playlists = all_songs_from_playlists + get_playlist_songs(category_playlist_ids[x])
+            try:
+                all_songs_from_playlists = all_songs_from_playlists + get_playlist_songs(category_playlist_ids[x])
+            except:
+                pass
 
         # shuffle the list to random
         random.shuffle(all_songs_from_playlists)
@@ -318,15 +357,21 @@ def by_categories():
 
     except:
         return render_template('san_home.html', error_message_genres='Error! Make sure to enter the name of the '
-                                                                 'genres right and separate with commas!')
+                                                                     'genres right and separate with commas!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
+    session.clear()
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two,
                            i_frame_url=i_frame_url)
 
-
 @app.route('/by_artists', methods=['POST', 'GET'])
 def by_artists():
+    try:
+        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    except:
+        return redirect('/')
+    if not auth_manager.get_cached_token():
+        return redirect('/') #if no login token, redirect back to root
     playlist_name = request.form['playlist_name']
     playlist_description = request.form['playlist_description']
 
@@ -355,12 +400,19 @@ def by_artists():
                                                                   'and separate them with a comma!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
+    session.clear()
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)
 
 
 # get playlist by one track reference
 @app.route('/by_one_track', methods=['POST', 'GET'])
 def by_one_track():
+    try:
+        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
+    except:
+        return redirect('/')
+    if not auth_manager.get_cached_token():
+        return redirect('/') #if no login token, redirect back to root
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     sp = spotipy.Spotify(auth_manager=auth_manager)
 
@@ -396,6 +448,7 @@ def by_one_track():
         return render_template('san_home.html', error_message_one_track="Cant seem to find the track! Check spelling!")
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
+    session.clear()
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)
 
 def get_tracks(name):
@@ -421,7 +474,7 @@ def get_artist_songs(artist_id, sp):
 def create_user_playlist(playlist_name, playlist_description, user_id):
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
     sp = spotipy.Spotify(auth_manager=auth_manager)
-    sp.user_playlist_create(user=user_id, name=playlist_name, public=True, collaborative=False, description=playlist_description)
+    sp.user_playlist_create(user=user_id, name=playlist_name, public=True, collaborative=False, description=(playlist_description + ' | Generated with love by http://playlistifyer.herokuapp.com'))
     return sp.user_playlists(user=user_id, limit=10, offset=0)['items'][0]['id']
 
 def populate_playlist(song_uris,playlist_id):
