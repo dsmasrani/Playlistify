@@ -2,11 +2,10 @@
 
 <html>
 	<head>
-		<title>Playlistifyer</title>
+		<title></title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" />
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
 
@@ -17,7 +16,6 @@
 					<nav id="nav">
 						<a href="/#">Home</a>
 						<a href="/about">About</a>
-						<a href="https://github.com/dsmasrani/Playlistify">Github</a>
 					</nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
@@ -36,9 +34,9 @@
 
 						<div>
 							<!--<span class="icon fa-car"></span>-->
-							<h3>Customization Minded</h3>
+							<h3>Customization Oriented</h3>
+							<p>Users can modify playlist name and description!</p>
 							<p>Wide variety of options</p>
-							<p>Easy to use UI</p>
 						</div>
 
 						<div>
@@ -68,9 +66,10 @@
 		<!-- Three -->
 			<section id="three" class="wrapper align-center">
 				<div class="inner">
+
 					<h3>Choose your options:</h3>
-					<h7>{{error_message_artists}}</h7>
 					<form action="/result" method="post">
+
 						<div class="field half first">
 							<label for="name">Playlist Name</label>
 							<input name="playlist_name" id="name" type="text" placeholder="Playlist Name">
@@ -90,10 +89,11 @@
   								<option value="0">Last Month</option>
   								<option value="1">Last 6 Months</option>
   								<option value="2">All Time</option>
- 								 <option value="3">All of the Above (Songs with all 3 time periods combined)</option>
+ 								 <option value="3">All of the Above</option>
 							</select>
 							<!--<textarea name="genre_names" id="message" rows="6" placeholder='Genre Names. Examples: Happy Holidays, Hip-Hop, Pop, Country, Workout, At-Home, Rock , Latin, Mood, R&B (R&B), Gaming, Focus, Dance/Electronic, Black History Music, Chill, Indie.'></textarea> -->
 						</div>
+						<p>{{error_message_artists}}</p>
 						<ul class="actions">
 
 							<li>
