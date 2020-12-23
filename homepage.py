@@ -36,20 +36,28 @@ Run app.py
         (will need to be updated in your Spotify app and SPOTIPY_REDIRECT_URI variable)
 """
 
-from flask import Flask, request, url_for, session, redirect, render_template
+from flask import Flask, request, url_for, session, redirect, render_template, flash
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from flask_mail import Message, Mail
 from app import *
 from app2 import *
 import uuid
 import os
 
+mail = Mail()
 app = Flask(__name__)
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = 'playlistifyer@gmail.com'
+app.config["MAIL_PASSWORD"] = 'xn$5YMr7%d72'
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './.flask_session/'
 Session(app)
-
+app.secret_key = 'development key'
+mail.init_app(app)
 global auth_redirect
 auth_redirect = False
 os.environ['SPOTIPY_CLIENT_ID'] = 'f3b6b69d44b9416ca63b4788eac70bc5'
@@ -163,23 +171,23 @@ def result():
         fail += 1
     try:
         playlist_description = request.form['playlist_description'] #attempts to pull playlist description
-        playlist_description = playlist_description + ' | Generated with love by https://Playlistify-dev.herokuapp.com'
+        playlist_description = playlist_description + ' | Generated with love by https://playlistifyer.herokuapp.com'
     except:
-        playlist_description = 'Generated with love by Playlistify'
+        playlist_description = 'Generated with love by Playlistifyer'
         fail += 1
     try:
         numsongs = int(request.form['number_of_songs']) #attempts to get number of songs
         if (numsongs > 100 or numsongs < 1):
-            return render_template('options.html', error_message_artists='Number of songs too low or high!')
+            return render_template('dev_home.html', error_message_artists='Number of songs too low or high!')
         #if greater than allowed num or less than 0, give error
     except:
         fail += 1
-        return render_template('options.html', error_message_artists='Make sure to enter a valid number!')
+        return render_template('dev_home.html', error_message_artists='Make sure to enter a valid number!')
     #if no num, throw error
     option = int(request.form['option']) #get option from form
     if (option == -1):
         fail += 1
-        return render_template('options.html', error_message_artists='Please select which time period you want!') #error message
+        return render_template('dev_home.html', error_message_artists='Please select which time period you want!') #error message
     if (fail < 4): #if all boxes r empty
         generatePlaylist(playlist_name, playlist_description) #do not generate playlist to prevent empty playlists
     if(option == 3):
@@ -196,6 +204,16 @@ def result():
     session.clear()
     #return request.form['option']
     return render_template('result.html', thing_one='Done!', thing_two='This playlist has been made in your Spotify Account!', i_frame_url=i_frame_url)
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    contact_name = request.form['name']
+    contact_email = request.form['email']
+    contact_message = request.form['message']
+    msg = Message('New form response from Playlistifyer', sender='dsmasrani@gmail.com',recipients=['sankalpvarshney12@gmail.com','dsmasrani@gmail.com'])
+    body = 'CONTACT NAME: ' + str(contact_name) + '\n\n' + 'CONTACT EMAIL: ' + str(contact_email) + '\n' + '\n' + 'MESSAGE BODY: ' + str(contact_message)
+    msg.body = body
+    mail.send(msg)
+    return render_template('/homepage.html/', success_message="Email was sent! We will get back to you shortly!")
 
 def generatePlaylist(name,description):
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
