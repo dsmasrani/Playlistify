@@ -58,8 +58,6 @@ app.config['SESSION_FILE_DIR'] = './.flask_session/'
 Session(app)
 app.secret_key = 'development key'
 mail.init_app(app)
-global auth_redirect
-auth_redirect = False
 global contact_redirect
 contact_redirect = False
 os.environ['SPOTIPY_CLIENT_ID'] = ''
@@ -81,8 +79,6 @@ def about():
     return render_template('about.html')
 @app.route('/')
 def homepage():
-    global auth_redirect
-    auth_redirect = False
     global contact_redirect
     contact_redirect = True
     return render_template('homepage.html')
@@ -96,14 +92,10 @@ def redirectPage():
     return redirect(url_for('home', _external=True))
 @app.route('/login_dev')
 def logindev():
-    global auth_redirect
-    auth_redirect = True
     return redirect('/login')
 
 @app.route('/login_san')
 def loginsan():
-    global auth_redirect
-    auth_redirect = False
     return redirect('/login')
 @app.route('/login')
 def login():
@@ -119,21 +111,15 @@ def login():
     if request.args.get("code"):
         # Step 3. Being redirected from Spotify auth page
         auth_manager.get_access_token(request.args.get("code"))
-        if(auth_redirect == True):
-            return redirect('/dev_home')
-        else:
-            return redirect('/san_home')
+        return redirect('/home')
 
     if not auth_manager.get_cached_token():
         # Step 2. Display sign in link when no token
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
-    if (auth_redirect == True):
-        return redirect('/dev_home')
-    else:
-        return redirect('/san_home')
+    return redirect('/home')
 
-@app.route('/san_home')
+@app.route('/home')
 def home():
     try:
         auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
@@ -141,28 +127,9 @@ def home():
         return redirect('/')
     if not auth_manager.get_cached_token():
         return redirect('/')
-    return render_template('san_home.html')
+    return render_template('home.html')
 
 # dev's below
-
-@app.route('/dev_home')
-def main():
-    try:
-        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_path=session_cache_path())
-    except:
-        return redirect('/')
-    sp1 = spotipy.Spotify(auth_manager=auth_manager)
-    if not auth_manager.get_cached_token():
-        return redirect('/')
-    return render_template('dev_home.html')
-
-@app.route('/dev_redirect')
-def dev_redirectPage():
-    sp_oauth = create_spotify_oauth()
-    code = request.args.get('code')
-    token_info = sp_oauth.get_access_token(code)
-    session['TOKEN_INFO'] = token_info
-    return redirect(url_for('options', _external=True))
 
 @app.route('/result',methods=['POST', 'GET'])
 def result():
@@ -186,17 +153,19 @@ def result():
         fail += 1
     try:
         numsongs = int(request.form['number_of_songs']) #attempts to get number of songs
-        if (numsongs > 100 or numsongs < 1):
-            return render_template('dev_home.html', error_message_artists='Number of songs too low or high!')
+        if (numsongs < 1):
+            return render_template('home.html', error_message_top='Number of songs too low or high!',error_message_header='Number of songs too low or high!')
+        if (numsongs > 100):
+            numsongs = 100
         #if greater than allowed num or less than 0, give error
     except:
         fail += 1
-        return render_template('dev_home.html', error_message_artists='Make sure to enter a valid number!')
+        return render_template('home.html', error_message_top='Make sure to enter a valid number!', error_message_header='Make sure to enter a valid number!')
     #if no num, throw error
     option = int(request.form['option']) #get option from form
     if (option == -1):
         fail += 1
-        return render_template('dev_home.html', error_message_artists='Please select which time period you want!') #error message
+        return render_template('home.html', error_message_top='Please select which time period you want!', error_message_header='Please select which time period you want!') #error message
     if (fail < 4): #if all boxes r empty
         generatePlaylist(playlist_name, playlist_description) #do not generate playlist to prevent empty playlists
     if(option == 3):
@@ -210,7 +179,6 @@ def result():
     #print(numsongs)
     #print(option)
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(getPlaylistID())
-    session.clear()
     #return request.form['option']
     return render_template('result.html', thing_one='Done!', thing_two='This playlist has been made in your Spotify Account!', i_frame_url=i_frame_url)
 @app.route('/contact', methods=['GET', 'POST'])
@@ -356,11 +324,9 @@ def by_categories():
         populate_playlist(cut_songs_from_playlists, playlist_id)
 
     except:
-        return render_template('san_home.html', error_message_genres='Error! Make sure to enter the name of the '
-                                                                     'genres right and separate with commas!')
+        return render_template('home.html', error_message_genres='Error! Make sure to enter the name of the genres right and separate with commas!', error_message_header='Error! Make sure to enter the name of the genres right and separate with commas!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
-    session.clear()
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two,
                            i_frame_url=i_frame_url)
 
@@ -396,11 +362,10 @@ def by_artists():
         playlist_id = create_user_playlist(playlist_name, playlist_description, user_id)
         populate_playlist(artist_songs_uris, playlist_id)
     except:
-        return render_template('san_home.html', error_message_artists='Make sure to enter the name of the artist right'
-                                                                  'and separate them with a comma!')
+        return render_template('home.html', error_message_artists='Make sure to enter the name of the artist right and separate them with a comma!',
+                               error_message_header='Make sure to enter the name of the artist right and separate them with a comma!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
-    session.clear()
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)
 
 
@@ -424,7 +389,23 @@ def by_one_track():
 
     try:
         track_name = (request.form['one_track_name']).lower()
-        artist_id = get_track_artist(track_name)
+
+        if '-' in track_name:
+            track_name = track_name.split('-')
+            try:
+                track_name[0] = track_name[0].strip()
+            except:
+                pass
+            try:
+                track_name[1] = track_name[1].strip()
+            except:
+                pass
+            print(track_name[0])
+            print(track_name[1])
+            artist_id = get_track_artist(track_name[1])
+        else:
+            print('ffsdfsdfsdfsdfsd')
+            artist_id = get_track_artist(track_name)
 
         # get the related artist's uris
         related_artists = get_related_artists(artist_id)
@@ -445,10 +426,9 @@ def by_one_track():
         playlist_id = create_user_playlist(playlist_name, playlist_description, user_id)
         populate_playlist(half_artists_songs, playlist_id)
     except:
-        return render_template('san_home.html', error_message_one_track="Cant seem to find the track! Check spelling!")
+        return render_template('home.html', error_message_one_track="Cant seem to find the track! Check spelling!", error_message_header='Cant seem to find the track! Check spelling!')
 
     i_frame_url = "https://open.spotify.com/embed/playlist/" + str(playlist_id)
-    session.clear()
     return render_template('result.html', thing_one=done_message, thing_two=done_message_two, i_frame_url=i_frame_url)
 
 def get_tracks(name):
@@ -512,8 +492,8 @@ def get_playlist_songs(playlist_id):
     total_song_uri = []
     for item in total_songs:
         total_song_uri.append(item['track']['uri'])
-    return total_song_uri
 
+    return total_song_uri
 
 
 
